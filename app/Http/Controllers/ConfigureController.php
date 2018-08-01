@@ -14,17 +14,38 @@ class ConfigureController extends Controller
     	try{
     		$bid=0;
     		$did=0;
+    		$gid=0;
     		$dev = array();
     		$but = array();
+    		$gat = array();
     		$path = base_path();
 			$sbus_path = env('SBUS_BRIDGE_PATH');
 			$buttons = $path.$sbus_path."buttons.txt";
 			$devices = $path.$sbus_path."devices.txt";
+			$gateways = $path.$sbus_path."gateways.txt";
+			if(!file_exists($buttons))
+				File::put($buttons,"");
+			if(!file_exists($devices))
+				File::put($devices,"");
+			if(!file_exists($gateways))
+				File::put($gateways,"");
 			$b_content = File::get($buttons);
 			$d_content = File::get($devices);
-			
+			$g_content = File::get($gateways);
 			$d_rows = explode("\n",$d_content);
 			$b_rows = explode("\n",$b_content);
+			$g_rows = explode("\n",$g_content);
+			foreach ($g_rows as $row) {
+				if($row!=NULL){
+					$data = explode(" ", $row);
+					$temp['ip_addr'] = $data[0];
+					$temp['username'] = $data[1];
+					$temp['password'] = $data[2];
+					$temp['id'] = $gid;
+					array_push($gat,$temp);
+					$gid++;
+				}
+			}
 
 			foreach ($d_rows as $row) {
 				if($row!=NULL){
@@ -53,11 +74,10 @@ class ConfigureController extends Controller
 					$bid++;
 				}
 			}
-
-    		return view('config.sbus',['devices'=>$dev,'buttons'=>$but]);
+    		return view('config.sbus',['devices'=>$dev,'buttons'=>$but,'gateways'=>$gat]);
     	}
     	catch(Exception $e){
-
+    		return $e;
     	}
     }
 
@@ -121,16 +141,28 @@ class ConfigureController extends Controller
     			'button_id' => 'required|numeric',
     			'target_id' => 'required|numeric',
     			'ip_addr' => 'required|ipv4',
-    			'username' => 'required',
-    			'password' => 'required',
     			'type' => 'required'
     	];
+    	$username = "";
+    	$password = "";
     	$this->validate($request, $rules);
     	$data = $request->all();
     	$path = base_path();
 		$sbus_path = env('SBUS_BRIDGE_PATH');
 		$buttons = $path.$sbus_path."buttons.txt";
-		$temp = $data['device_id']." ".$data['button_id']." ".$data['target_id']." ".$data['ip_addr']." ".$data['username']." ".$data['password']." ".$data['type']."\n";
+		$gateways = $path.$sbus_path."gateways.txt";
+		$g_content = File::get($gateways);
+		$g_rows = explode("\n",$g_content);
+		foreach ($g_rows as $row) {
+			if($row!=NULL){
+				$dat = explode(" ", $row);
+				if($dat[0] == $data['ip_addr']){
+					$username = $dat[1];
+					$password = $dat[2];
+				}
+			}
+		}
+		$temp = $data['device_id']." ".$data['button_id']." ".$data['target_id']." ".$data['ip_addr']." ".$username." ".$password." ".$data['type']."\n";
 		File::append($buttons, $temp);
     	return redirect('/sbus');
     }
@@ -164,6 +196,55 @@ class ConfigureController extends Controller
     	}
     }
 
+    public function sbus_add_gateway(Request $request){
+    	try{
+	    	$rules = [
+	    		'ip_addr' => 'required|ipv4',
+	    		'username' => 'required',
+	    		'password' => 'required'
+	    	];
+	    	$this->validate($request, $rules);
+	    	$data = $request->all();
+	    	$path = base_path();
+			$sbus_path = env('SBUS_BRIDGE_PATH');
+			$gateways = $path.$sbus_path."gateways.txt";
+			$temp = $data['ip_addr']." ".$data['username']." ".$data['password']."\n";
+			File::append($gateways, $temp);
+	    	return redirect('/sbus');
+    	}
+    	catch(Exception $e){
+
+    	}
+    }
+
+    public function sbus_delete_gateway($id){
+    	try{
+    		$lid=0;
+    		$dev = array();
+    		$path = base_path();
+			$sbus_path = env('SBUS_BRIDGE_PATH');
+			$gateways = $path.$sbus_path."gateways.txt";
+			$g_content = File::get($gateways);
+			$g_rows = explode("\n",$g_content);
+
+			foreach ($g_rows as $row) {
+				if($row!=NULL){
+					$data = explode(" ", $row);
+					if($lid != $id){
+						$temp = $data[0]." ".$data[1]." ".$data[2]."\n";
+						array_push($dev,$temp);
+					}
+					$lid++;
+				}
+			}
+			File::put($gateways, $dev);
+			return redirect('/sbus');
+    	}
+    	catch(Exception $e){
+
+    	}
+    }
+
     public function zmote(){
     	try{
     		$bid=0;
@@ -177,10 +258,15 @@ class ConfigureController extends Controller
 			$buttons = $path.$sbus_path."Buttons.txt";
 			$devices = $path.$sbus_path."Devices.txt";
 			$zmotes = $path.$sbus_path."ZMotes.txt";
+			if(!file_exists($buttons))
+				File::put($buttons,"");
+			if(!file_exists($devices))
+				File::put($devices,"");
+			if(!file_exists($zmotes))
+				File::put($zmotes,"");
 			$b_content = File::get($buttons);
 			$d_content = File::get($devices);
 			$z_content = File::get($zmotes);
-			
 			$d_rows = explode("\n",$d_content);
 			$b_rows = explode("\n",$b_content);
 			$z_rows = explode("\n",$z_content);

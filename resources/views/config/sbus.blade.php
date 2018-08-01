@@ -45,7 +45,7 @@
       <div class="content">
         <div class="devices">
           <div class="title">
-            Fibaro Gateway : <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#add_device">Add a new gateway</button>
+            Fibaro Gateway : <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#add_gateway">Add a new gateway</button>
           </div>
           <div class="content">
             <table class="table table-striped table-sm">
@@ -57,11 +57,23 @@
                   <th scope="col">Action</th>
                 </tr>
               </thead>
+              <tbody>
+                @if($gateways!=NULL)
+                  @foreach($gateways as $gateway)
+                    <tr>
+                      <td>{{ $gateway['ip_addr'] }}</td>
+                      <td>{{ $gateway['username'] }}</td>
+                      <td>{{ $gateway['password'] }}</td>
+                      <td><a href="{{ url('/sbus/').'/'.$gateway['id'].'/delete/gateway' }}" class="btn btn-sm btn-outline-danger">Delete</a> <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit_device">Edit</button></td>
+                    </tr>
+                  @endforeach
+                @endif
+              </tbody>
             </table>
           </div>
         </div>
       </div>
-      <br>
+      <!--   -->
 			<div class="content">
 				<div class="devices">
 					<div class="title">
@@ -94,7 +106,7 @@
 						</table>
 					</div>
 				</div>
-				<br>
+				<!--   -->
 				<div class="buttons">
 					<div class="title">
 						Map Panel Buttons : <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#add_button">Map a new button</button>
@@ -194,6 +206,64 @@
           </div>
         </div>
 
+        <!-- Add Gateway Modal -->
+        <div class="modal fade" id="add_gateway" tabindex="-1" role="dialog" aria-labelledby="add_gateway" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add a New Gateway</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="title">
+                                {!! Form::open(array('route' => 'sbus/add/gateway','method'=>'POST')) !!}
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                      <label for="ip_addr">Fibaro IP Address</label>
+                                      <input type="text" name="ip_addr" id="ip_addr" class="form-control form-control-sm">
+                                    </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                      <label for="username">Fibaro Username</label>
+                                      <input type="text" name="username" id="username" class="form-control form-control-sm">
+                                    </div>
+                              </div>
+                            </div>
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                                      <label for="password">Fibaro Password</label>
+                                      <input type="text" name="password" id="password" class="form-control form-control-sm">
+                                    </div>
+                          </div>
+                          <div class="col">
+                            
+                          </div>
+                        </div>                
+                               
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Add</button>
+                {!! Form::close() !!}
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Edit Device Modal -->
         <div class="modal fade" id="edit_device" tabindex="-1" role="dialog" aria-labelledby="edit_device" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
@@ -247,9 +317,7 @@
                          				<div class="form-group">
 		                                	<label for="device_id">Panel Device ID</label>
 		                                	<select class="form-control form-control-sm" id="device_id" name="device_id">
-                                                
-                                                
-                                                @if($devices!=NULL)
+                                        @if($devices!=NULL)
 											    	@foreach($devices as $device)
 											    			<option value="{{ $device['device_id'] }}">{{ $device['device_id'] }}</option>		      
 											    	@endforeach
@@ -273,25 +341,18 @@
                 					</div>
                 					<div class="col">
                 						<div class="form-group">
-		                                	<label for="port">Fibaro IP Address</label>
-		                                	<input type="text" name="ip_addr" id="ip_addr" class="form-control form-control-sm">
-		                                </div>
+		                          <label for="ip_addr">Fibaro IP Address</label>
+		                           	<select class="form-control form-control-sm" id="ip_addr" name="ip_addr">
+                                  @if($gateways!=NULL)
+                                    @foreach($gateways as $gateway)
+                                        <option value="{{ $gateway['ip_addr'] }}">{{ $gateway['ip_addr'] }}</option>          
+                                    @endforeach
+                                  @endif
+                                </select>
+		                        </div>
                 					</div>
                 				</div>
-                				<div class="row">
-                					<div class="col">
-                						<div class="form-group">
-		                                	<label for="port">Fibaro Username</label>
-		                                	<input type="text" name="username" id="username" class="form-control form-control-sm">
-		                                </div>
-                					</div>
-                					<div class="col">
-                						<div class="form-group">
-		                                	<label for="port">Fibaro Password</label>
-		                                	<input type="text" name="password" id="password" class="form-control form-control-sm">
-		                                </div>
-                					</div>
-                				</div>
+                				
                 				<div class="row">
                 					<div class="col">
                 						<div class="form-group">

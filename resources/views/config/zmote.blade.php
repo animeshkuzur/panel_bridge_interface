@@ -72,7 +72,7 @@
 						</table>
 					</div>
 				</div>
-				<br>
+				<!--   -->
 				<div class="devices">
 					<div class="title">
 						Panels : <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#add_device">Add a new panel</button>
@@ -104,7 +104,7 @@
 						</table>
 					</div>
 				</div>
-				<br>
+				<!--   -->
 				<div class="buttons">
 					<div class="title">
 						Map Panel Buttons : <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#add_button">Map a new button</button>
