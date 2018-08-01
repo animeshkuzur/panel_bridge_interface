@@ -35,7 +35,6 @@ Route::post('/sbus/add/button',['middleware'=>'enable.lock','as'=>'sbus/add/butt
 Route::get('/sbus/{id}/delete/device',['middleware'=>'enable.lock','as'=>'sbus/delete/device','uses'=>'ConfigureController@sbus_delete_device']);
 Route::get('/sbus/{id}/delete/gateway',['middleware'=>'enable.lock','as'=>'sbus/delete/gateway','uses'=>'ConfigureController@sbus_delete_gateway']);
 Route::get('/sbus/{id}/delete/button',['middleware'=>'enable.lock','as'=>'sbus/delete/button','uses'=>'ConfigureController@sbus_delete_button']);
-Route::post('/sbus/{id}/edit/device',['middleware'=>'enable.lock','as'=>'sbus/edit/device','uses'=>'ConfigureController@sbus_edit_device']);
 
 Route::get('/zmote',['middleware'=>'enable.lock','as'=>'zmote','uses'=>'ConfigureController@zmote']);
 Route::post('/zmote/add/device',['middleware'=>'enable.lock','as'=>'zmote/add/device','uses'=>'ConfigureController@zmote_add_device']);

@@ -12,5 +12,5 @@ yarn-error.log
 .env
 access.log
 error.log
-/SILOP/SBusBridge/keys.txt
-/SILOP/ZMoteBridge/keys.txt
+/SILOP/SBusBridge/*.txt
+/SILOP/ZMoteBridge/*.txt

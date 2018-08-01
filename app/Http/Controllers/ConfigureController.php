@@ -83,9 +83,9 @@ class ConfigureController extends Controller
 
     public function sbus_add_device(Request $request){
     	$rules = [
-    			'device_id' => 'required|numeric',
-    			'ip_addr' => 'required|ipv4',
-    			'port' => 'required|numeric|max:65535'
+    		'device_id' => 'required|numeric',
+    		'ip_addr' => 'required|ipv4',
+    		'port' => 'required|numeric|max:65535'
     	];
     	$this->validate($request, $rules);
     	$data = $request->all();
@@ -126,22 +126,13 @@ class ConfigureController extends Controller
     	}
     }
 
-    public function sbus_edit_device(Request $request,$id){
-    	try{
-
-    	}
-    	catch(Exception $e){
-
-    	}
-    }
-
     public function sbus_add_button(Request $request){
     	$rules = [
-    			'device_id' => 'required|numeric',
-    			'button_id' => 'required|numeric',
-    			'target_id' => 'required|numeric',
-    			'ip_addr' => 'required|ipv4',
-    			'type' => 'required'
+    		'device_id' => 'required|numeric',
+    		'button_id' => 'required|numeric',
+    		'target_id' => 'required|numeric',
+    		'ip_addr' => 'required|ipv4',
+    		'type' => 'required'
     	];
     	$username = "";
     	$password = "";
@@ -298,9 +289,54 @@ class ConfigureController extends Controller
 			foreach ($b_rows as $row) {
 				if($row!=NULL){
 					$data = explode(" ", $row);
+					$s="";
+					switch($data[1]){
+						case "01" : $s= "ON";
+						break;
+						case "02" : $s= "OFF";
+						break;
+						case "0a" : $s= "LOW";
+						break;
+						case "0b" : $s= "MED";
+						break;
+						case "0c" : $s= "HIGH";
+						break;
+						case "10" : $s= "16";
+						break;
+						case "11" : $s= "17";
+						break;
+						case "12" : $s= "18";
+						break;
+						case "13" : $s= "19";
+						break;
+						case "14" : $s= "20";
+						break;
+						case "15" : $s= "21";
+						break;
+						case "16" : $s= "22";
+						break;
+						case "17" : $s= "23";
+						break;
+						case "18" : $s= "24";
+						break;
+						case "19" : $s= "25";
+						break;
+						case "1a" : $s= "26";
+						break;
+						case "1b" : $s= "27";
+						break;
+						case "1c" : $s= "28";
+						break;
+						case "1d" : $s= "29";
+						break;
+						case "1e" : $s= "30";
+						break;
+					}
+
 					$temp['UUID'] = $data[0];
 					$temp['button_id'] = $data[1];
 					$temp['ir_code'] = $data[2];
+					$temp['type'] = $s;
 					$temp['id'] = $bid;
 					array_push($but,$temp);
 					$bid++;
@@ -316,36 +352,220 @@ class ConfigureController extends Controller
     }
 
     public function zmote_add_device(Request $request){
-    	return 0;
+    	try{
+    		$rules = [
+	    		'ip_addr' => 'required|ipv4',
+	    		'device_id' => 'required|numeric',
+	    		'port' => 'required|numeric|max:65535'
+	    	];
+	    	$this->validate($request, $rules);
+	    	$data = $request->all();
+	    	$path = base_path();
+			$sbus_path = env('ZMOTE_BRIDGE_PATH');
+			$devices = $path.$sbus_path."Devices.txt";
+			$temp = $data['device_id']." ".$data['ip_addr']." ".$data['port']."\n";
+			File::append($devices, $temp);
+	    	return redirect('/zmote');
+    	}
+    	catch(Exception $e){
+
+    	}
     }
 
     public function zmote_add_zmote(Request $request){
-    	return 0;
+    	try{
+    		$rules = [
+	    		'ip_addr' => 'required|ipv4',
+	    		'device_id' => 'required|numeric',
+	    		'UUID' => 'required'
+	    	];
+	    	$this->validate($request, $rules);
+	    	$data = $request->all();
+	    	$path = base_path();
+			$sbus_path = env('ZMOTE_BRIDGE_PATH');
+			$zmotes = $path.$sbus_path."ZMotes.txt";
+			$temp = $data['device_id']." ".$data['UUID']." ".$data['ip_addr']."\n";
+			File::append($zmotes, $temp);
+	    	return redirect('/zmote');
+    	}
+    	catch(Exception $e){
+
+    	}
     }
 
     public function zmote_add_button(Request $request){
-    	return 0;
+    	try{
+    		$s="";
+    		$rules = [
+	    		'device_id' => 'required|numeric',
+	    		'zmote_uuid' => 'required',
+	    		'type' => 'required',
+	    		'ir_code' => 'required'
+	    	];
+	    	$this->validate($request, $rules);
+	    	$data = $request->all();
+	    	$path = base_path();
+			$sbus_path = env('ZMOTE_BRIDGE_PATH');
+			$buttons = $path.$sbus_path."Buttons.txt";
+			
+			switch($data['type']){
+				case "ON" : $s= "01";
+				break;
+				case "OFF" : $s= "02";
+				break;
+				case "LOW" : $s= "0a";
+				break;
+				case "MED" : $s= "0b";
+				break;
+				case "HIGH" : $s= "0c";
+				break;
+				case "16" : $s= "10";
+				break;
+				case "17" : $s= "11";
+				break;
+				case "18" : $s= "12";
+				break;
+				case "19" : $s= "13";
+				break;
+				case "20" : $s= "14";
+				break;
+				case "21" : $s= "15";
+				break;
+				case "22" : $s= "16";
+				break;
+				case "23" : $s= "17";
+				break;
+				case "24" : $s= "18";
+				break;
+				case "25" : $s= "19";
+				break;
+				case "26" : $s= "1a";
+				break;
+				case "27" : $s= "1b";
+				break;
+				case "28" : $s= "1c";
+				break;
+				case "29" : $s= "1d";
+				break;
+				case "30" : $s= "1e";
+				break;
+			}
+
+			$temp = $data['zmote_uuid']." ".$s." ".$data['ir_code']."\n";
+			File::append($buttons, $temp);
+	    	return redirect('/zmote');
+    	}
+    	catch(Exception $e){
+
+    	}
     }
 
     public function zmote_delete_device($id){
-    	return 0;
+    	try{
+    		$lid=0;
+    		$dev = array();
+    		$path = base_path();
+			$sbus_path = env('ZMOTE_BRIDGE_PATH');
+			$devices = $path.$sbus_path."Devices.txt";
+			$d_content = File::get($devices);
+			$d_rows = explode("\n",$d_content);
+
+			foreach ($d_rows as $row) {
+				if($row!=NULL){
+					$data = explode(" ", $row);
+					if($lid != $id){
+						$temp = $data[0]." ".$data[1]." ".$data[2]."\n";
+						array_push($dev,$temp);
+					}
+					$lid++;
+				}
+			}
+			File::put($devices, $dev);
+			return redirect('/zmote');
+    	}
+    	catch(Exception $e){
+
+    	}
     }
 
     public function zmote_delete_zmote($id){
-    	return 0;
+    	try{
+    		$lid=0;
+    		$dev = array();
+    		$path = base_path();
+			$sbus_path = env('ZMOTE_BRIDGE_PATH');
+			$zmotes = $path.$sbus_path."ZMotes.txt";
+			$z_content = File::get($zmotes);
+			$z_rows = explode("\n",$z_content);
+
+			foreach ($z_rows as $row) {
+				if($row!=NULL){
+					$data = explode(" ", $row);
+					if($lid != $id){
+						$temp = $data[0]." ".$data[1]." ".$data[2]."\n";
+						array_push($dev,$temp);
+					}
+					$lid++;
+				}
+			}
+			File::put($zmotes, $dev);
+			return redirect('/zmote');
+    	}
+    	catch(Exception $e){
+
+    	}
     }
 
     public function zmote_delete_button($id){
-    	return 0;
+    	try{
+    		$lid=0;
+    		$but = array();
+    		$path = base_path();
+			$sbus_path = env('ZMOTE_BRIDGE_PATH');
+			$buttons = $path.$sbus_path."Buttons.txt";
+			$b_content = File::get($buttons);
+			$b_rows = explode("\n",$b_content);
+
+			foreach ($b_rows as $row) {
+				if($row!=NULL){
+					$data = explode(" ", $row);
+					if($lid != $id){
+						$temp = $data[0]." ".$data[1]." ".$data[2]."\n";
+						array_push($but,$temp);
+					}
+					$lid++;
+				}
+			}
+			File::put($buttons, $but);
+			return redirect('/zmote');
+    	}
+    	catch(Exception $e){
+
+    	}
     }
 
     public function reset(){
     	try{
     		$path = base_path();
-			$sbus_path = $path.env('SBUS_BRIDGE_PATH')."keys.txt";
-			$zmote_path = $path.env('ZMOTE_BRIDGE_PATH')."keys.txt";
-			File::Delete($sbus_path);
-			File::Delete($zmote_path);
+			$sbus_keys = $path.env('SBUS_BRIDGE_PATH')."keys.txt";
+			$sbus_devices = $path.env('SBUS_BRIDGE_PATH')."devices.txt";
+			$sbus_buttons = $path.env('SBUS_BRIDGE_PATH')."buttons.txt";
+			$sbus_gateways = $path.env('SBUS_BRIDGE_PATH')."gateways.txt";
+
+			$zmote_keys = $path.env('ZMOTE_BRIDGE_PATH')."keys.txt";
+			$zmote_devices = $path.env('ZMOTE_BRIDGE_PATH')."Devices.txt";
+			$zmote_buttons = $path.env('ZMOTE_BRIDGE_PATH')."Buttons.txt";
+			$zmote_zmotes = $path.env('ZMOTE_BRIDGE_PATH')."ZMotes.txt";
+
+			File::Delete($sbus_keys);
+			File::Delete($sbus_devices);
+			File::Delete($sbus_buttons);
+			File::Delete($sbus_gateways);
+
+			File::Delete($zmote_keys);
+			File::Delete($zmote_devices);
+			File::Delete($zmote_buttons);
+			File::Delete($zmote_zmotes);
     		return redirect('/');
     	}
     	catch(Exception $e){

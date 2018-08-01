@@ -15,7 +15,7 @@
                 Panel Bridge Interface 
             </a>
             <form class="form-inline" method="GET" action="{{ url('/reboot') }}">
-                <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Save and Reboot</button>
+                <button class="btn btn-outline-warning my-2 my-sm-0 btn-sm" type="submit">Save and Reboot</button>
             </form>
         </div>        
     </nav>
@@ -51,7 +51,7 @@
 						<table class="table table-striped table-sm">
 						  <thead>
 						    <tr>
-						      <th scope="col">Device ID</th>
+						      <th scope="col">Panel ID</th>
 						      <th scope="col">UUID</th>
 						      <th scope="col">IP Address</th>
 						      <th scope="col">Action</th>
@@ -64,7 +64,7 @@
 								      <td>{{ $zmote['device_id'] }}</td>
 								      <td>{{ $zmote['UUID'] }}</td>
 								      <td>{{ $zmote['ip_addr'] }}</td>
-								      <td><a href="{{ url('/zmote/').'/'.$zmote['id'].'/delete/zmote' }}" class="btn btn-sm btn-outline-danger">Delete</a> <button class="btn btn-sm btn-outline-primary">Edit</button></td>
+								      <td><a href="{{ url('/zmote/').'/'.$zmote['id'].'/delete/zmote' }}" class="btn btn-sm btn-outline-danger">Delete</a> <!-- <button class="btn btn-sm btn-outline-primary">Edit</button> --></td>
 								    </tr>
 						    	@endforeach
 						    @endif
@@ -95,7 +95,7 @@
 								      <td>{{ $device['device_id'] }}</td>
 								      <td>{{ $device['ip_addr'] }}</td>
 								      <td>{{ $device['port'] }}</td>
-								      <td><a href="{{ url('/zmote/').'/'.$device['id'].'/delete/device' }}" class="btn btn-sm btn-outline-danger">Delete</a> <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit_device">Edit</button></td>
+								      <td><a href="{{ url('/zmote/').'/'.$device['id'].'/delete/device' }}" class="btn btn-sm btn-outline-danger">Delete</a> <!-- <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit_device">Edit</button> --></td>
 								    </tr>
 						    	@endforeach
 						    @endif
@@ -115,7 +115,8 @@
 						  <thead>
 						    <tr>
 						      <th scope="col">UUID</th>
-						      <th scope="col">Button ID</th>
+						      <!-- <th scope="col">Button ID</th> -->
+						      <th scope="col">Button Type</th>
 						      <th scope="col">Action</th>
 						      <th scope="col">IR Code</th>
 						    </tr>
@@ -125,8 +126,9 @@
 						    	@foreach($buttons as $button)
 						    		<tr>
 								      <td>{{ $button['UUID'] }}</td>
-								      <td>{{ $button['button_id'] }}</td>
-								      <td><a href="{{ url('/zmote/').'/'.$button['id'].'/delete/button' }}" class="btn btn-sm btn-outline-danger">Delete</a> <button class="btn btn-sm btn-outline-primary">Edit</button></td>
+								      <!-- <td>{{ $button['button_id'] }}</td> -->
+								      <td>{{ $button['type'] }}</td>
+								      <td><a href="{{ url('/zmote/').'/'.$button['id'].'/delete/button' }}" class="btn btn-sm btn-outline-danger">Delete</a> <!-- <button class="btn btn-sm btn-outline-primary">Edit</button> --></td>
 								      <td>{{ $button['ir_code'] }}</td>
 								    </tr>
 						    	@endforeach
@@ -145,7 +147,7 @@
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Add a New Device</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Add a New Panel</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -159,7 +161,7 @@
                          		<div class="row">
                          			<div class="col">
                          				<div class="form-group">
-		                                	<label for="device_id">Device ID</label>
+		                                	<label for="device_id">Panel ID</label>
 		                                	<input type="text" name="device_id" id="device_id" class="form-control form-control-sm">
 		                                </div>
                          			</div>

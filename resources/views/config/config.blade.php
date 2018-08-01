@@ -14,8 +14,9 @@
                 
                 Panel Bridge Interface 
             </a>
+
             <form class="form-inline" method="GET" action="{{ url('/reboot') }}">
-                <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Save and Reboot</button>
+                <button class="btn btn-outline-warning my-2 my-sm-0 btn-sm" type="submit">Save and Reboot</button>
             </form>
         </div>        
     </nav>
@@ -26,8 +27,8 @@
 			</div>
 			<hr>
 			<div class="content">
-				<a href="{{ url('/sbus') }}" class="btn btn-primary">FIBARO</a>
-                <a href="{{ url('/zmote') }}" class="btn btn-primary">ZMOTE</a>
+				<a href="{{ url('/sbus') }}" class="btn btn-primary btn-lg">FIBARO</a>
+                <a href="{{ url('/zmote') }}" class="btn btn-primary btn-lg">ZMOTE</a>
                 <hr>
                 <button  class="btn btn-danger" data-toggle="modal" data-target="#confirm">Reset</button>
 			</div>

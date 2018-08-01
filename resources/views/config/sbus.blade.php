@@ -15,7 +15,7 @@
                 Panel Bridge Interface 
             </a>
             <form class="form-inline" method="GET" action="{{ url('/reboot') }}">
-                <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Save and Reboot</button>
+                <button class="btn btn-outline-warning my-2 my-sm-0 btn-sm" type="submit">Save and Reboot</button>
             </form>
         </div>        
     </nav>
@@ -64,7 +64,7 @@
                       <td>{{ $gateway['ip_addr'] }}</td>
                       <td>{{ $gateway['username'] }}</td>
                       <td>{{ $gateway['password'] }}</td>
-                      <td><a href="{{ url('/sbus/').'/'.$gateway['id'].'/delete/gateway' }}" class="btn btn-sm btn-outline-danger">Delete</a> <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit_device">Edit</button></td>
+                      <td><a href="{{ url('/sbus/').'/'.$gateway['id'].'/delete/gateway' }}" class="btn btn-sm btn-outline-danger">Delete</a> <!-- <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit_device">Edit</button> --></td>
                     </tr>
                   @endforeach
                 @endif
@@ -97,7 +97,7 @@
 								      <td>{{ $device['device_id'] }}</td>
 								      <td>{{ $device['ip_addr'] }}</td>
 								      <td>{{ $device['port'] }}</td>
-								      <td><a href="{{ url('/sbus/').'/'.$device['id'].'/delete/device' }}" class="btn btn-sm btn-outline-danger">Delete</a> <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit_device">Edit</button></td>
+								      <td><a href="{{ url('/sbus/').'/'.$device['id'].'/delete/device' }}" class="btn btn-sm btn-outline-danger">Delete</a> <!-- <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit_device">Edit</button> --></td>
 								    </tr>
 						    	@endforeach
 						    @endif
@@ -136,7 +136,7 @@
 								      <td>{{ $button['username'] }}</td>
 								      <td>{{ $button['password'] }}</td>
 								      <td>{{ $button['type'] }}</td>
-								      <td><a href="{{ url('/sbus/').'/'.$button['id'].'/delete/button' }}" class="btn btn-sm btn-outline-danger">Delete</a> <button class="btn btn-sm btn-outline-primary">Edit</button></td>
+								      <td><a href="{{ url('/sbus/').'/'.$button['id'].'/delete/button' }}" class="btn btn-sm btn-outline-danger">Delete</a> <!-- <button class="btn btn-sm btn-outline-primary">Edit</button> --></td>
 								    </tr>
 						    	@endforeach
 						    @endif
