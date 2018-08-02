@@ -26,7 +26,7 @@
 			<div class="errors">
 				@if($errors)
                     @if(count($errors))
-                        @foreach($errors as $error)
+                        @foreach($errors->all() as $error)
                             <div class="alert alert-danger alert-dismissible" role="alert">
                                 <font style="font-size: 12px; padding: 0px; margin : 0px;">
                                     {{ $error }}
