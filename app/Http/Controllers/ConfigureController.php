@@ -577,9 +577,10 @@ class ConfigureController extends Controller
     	try{
     		echo "Device Rebooting...";
     		exec('sudo reboot',$output,$result);
+    		return $result;
     	}
     	catch(Exception $e){
-
+    		return $e;
     	}
     }
 }
