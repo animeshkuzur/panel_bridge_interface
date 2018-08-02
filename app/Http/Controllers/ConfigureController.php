@@ -575,9 +575,9 @@ class ConfigureController extends Controller
 
     public function reboot(){
     	try{
-    		echo "Device Rebooting...";
-    		$path = base_path().'reboot.sh';
-    		exec('reboot.sh',$output,$result);
+    		echo "Device Rebooting...<BR>";
+    		$path = base_path().'/reboot.sh';
+    		exec($path,$output,$result);
     		return $result;
     	}
     	catch(Exception $e){
