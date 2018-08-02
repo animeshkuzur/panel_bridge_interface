@@ -26,17 +26,17 @@
 			<div class="errors">
 				@if($errors)
                     @if(count($errors))
-                        
+                        @foreach($errors as $error)
                             <div class="alert alert-danger alert-dismissible" role="alert">
                                 <font style="font-size: 12px; padding: 0px; margin : 0px;">
-                                    Invalid Key.
+                                    {{ $error }}
                                 </font>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                           
                                 </button>
                             </div>
-                        
+                        @endforeach
                     @endif
                 @endif
 			</div>
