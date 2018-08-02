@@ -577,7 +577,7 @@ class ConfigureController extends Controller
     	try{
     		echo "Device Rebooting...";
     		$path = base_path().'/phpreboot';
-    		exec('reboot',$output,$result);
+    		exec('sudo reboot',$output,$result);
     	}
     	catch(Exception $e){
     		return $e;
