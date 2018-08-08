@@ -8,15 +8,21 @@
     <link rel="stylesheet" href="{{URL::asset('/css/styles.css')}}">
 </head>
 <body>
+  <div class="counter" hidden="hidden" id="counter">
+    <div class="text">
+      <h5>Reboot Initiated</h5>
+      <div class="sec" id="sec">
+        45
+      </div>seconds remaining
+    </div>
+  </div>
 	<nav class="navbar navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
                 
                 Panel Bridge Interface 
             </a>
-            <form class="form-inline" method="GET" action="{{ url('/reboot') }}">
-                <button class="btn btn-outline-warning my-2 my-sm-0 btn-sm" type="submit">Save and Reboot</button>
-            </form>
+                <button class="btn btn-outline-warning my-2 my-sm-0 btn-sm" id="snr" name="snr">Save and Reboot</button>
         </div>        
     </nav>
 	<div class="config-panel">
@@ -399,5 +405,40 @@
 	<script src="{{URL::asset('/js/jquery.min.js')}}"></script>
     <script src="{{URL::asset('/js/popper.min.js')}}"></script>
     <script src="{{URL::asset('/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript">
+      $('#snr').on('click', function() {
+
+        $('#counter').removeAttr('hidden');
+
+        $.ajax({
+          url: "{{ url('/reboot') }}",
+          type: "GET",
+          data: null,
+          success: function(response) {
+            console.log(response);
+          },
+          error: function(xhr) {
+            
+          }
+        });
+        var i=45;
+
+         
+          setInterval(function(){
+            if(i>=0){
+              $('#sec').text(i);
+              /*console.log(i);  */
+            }
+            else{
+              window.location.reload();
+            }
+            i--;
+
+          }, 1000);
+
+        
+
+      });
+    </script>
 </body>
 </html>

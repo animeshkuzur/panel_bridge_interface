@@ -1,6 +1,23 @@
 body{
 
 }
+.counter{
+	position: absolute;
+	z-index: 3;
+	height: 100%;
+	width: 100%;
+	background-color: #000000;
+	opacity: 0.85;
+	color: #fff;
+}
+.counter .text{
+	text-align: center;
+	margin: auto auto;
+	padding: 50px; 
+}
+.counter .sec{
+	font-size: 90px;
+}
 .navbar-nav { 
     flex-direction: row;
 }
