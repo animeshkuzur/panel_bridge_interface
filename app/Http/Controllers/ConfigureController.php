@@ -586,13 +586,13 @@ class ConfigureController extends Controller
 
     public function reload($id){
     	try{
-    		$pid=NULL;
+    		$pid="0";
     		if($id==1){
     			exec("ps -aux | grep 'sudo java -jar SILOP.jar'",$output,$result);
-    			foreach ($output as $dat) {
+			foreach ($output as $dat) {
     				$res = explode(" ", $dat);
-    				if($res[0]=='root'){
-    					$pid = $res[1];
+    				if($res[0]=="root"){
+    					$pid = $res[7];
     				}
     			}
     		}
@@ -601,7 +601,7 @@ class ConfigureController extends Controller
     			foreach ($output as $dat) {
     				$res = explode(" ", $dat);
     				if($res[0]=='root'){
-    					$pid = $res[1];
+    					$pid = $res[7];
     				}
     			}
     		}
