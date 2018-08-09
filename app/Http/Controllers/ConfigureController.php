@@ -583,4 +583,22 @@ class ConfigureController extends Controller
     		return $e;
     	}
     }
+
+    public function reload($id){
+    	try{
+    		if($id==1){
+    			exec("ps -aux | grep 'sudo java -jar SILOP.jar'",$output,$result);
+    			return $output;
+    			/*foreach ($output as $dat) {
+    				return $dat;
+    			}*/
+    		}
+    		else{
+
+    		}
+    	}
+    	catch(Exception $e){
+
+    	}
+    }
 }

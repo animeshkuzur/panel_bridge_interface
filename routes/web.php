@@ -46,3 +46,4 @@ Route::get('/zmote/{id}/delete/button',['middleware'=>'enable.lock','as'=>'zmote
 
 Route::get('/reset',['middleware'=>'enable.lock','as'=>'reset','uses'=>'ConfigureController@reset']);
 Route::get('/reboot',['middleware'=>'enable.lock','as'=>'reboot','uses'=>'ConfigureController@reboot']);
+Route::get('/reload/{id}',['middleware'=>'enable.lock','as'=>'reload','uses'=>'ConfigureController@reload']);
