@@ -586,7 +586,7 @@ class ConfigureController extends Controller
 
     public function reload($id){
     	try{
-    		$pid=0;
+    		$pid=NULL;
     		if($id==1){
     			exec("ps -aux | grep 'sudo java -jar SILOP.jar'",$output,$result);
     			foreach ($output as $dat) {
