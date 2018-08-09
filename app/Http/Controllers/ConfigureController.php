@@ -586,15 +586,20 @@ class ConfigureController extends Controller
 
     public function reload($id){
     	try{
+    		$path = base_path().'/SILOP/';
     		$pid="0";
     		if($id==1){
     			exec("ps -aux | grep 'sudo java -jar SILOP.jar'",$output,$result);
-			foreach ($output as $dat) {
+				foreach ($output as $dat) {
     				$res = explode(" ", $dat);
     				if($res[0]=="root"){
     					$pid = $res[7];
+    					break;
     				}
     			}
+    			exec('sudo kill '.$pid,$output,$result);
+    			$path = $path.env('SBUS_BRIDGE_PATH')."SILOP.jar";
+    			exec('sudo java -jar '.$path,$output,$result);
     		}
     		else{
     			exec("ps -aux | grep 'sudo java -jar SILOP2.jar'",$output,$result);
@@ -602,10 +607,15 @@ class ConfigureController extends Controller
     				$res = explode(" ", $dat);
     				if($res[0]=='root'){
     					$pid = $res[7];
+    					break;
     				}
     			}
+    			exec('sudo kill '.$pid,$output,$result);
+    			$path = $path.env('ZMOTE_BRIDGE_PATH')."SILOP2.jar";
+    			exec('sudo java -jar '.$path,$output,$result);
     		}
     		return $pid;
+
     	}
     	catch(Exception $e){
 
