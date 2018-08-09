@@ -586,16 +586,26 @@ class ConfigureController extends Controller
 
     public function reload($id){
     	try{
+    		$pid=0;
     		if($id==1){
     			exec("ps -aux | grep 'sudo java -jar SILOP.jar'",$output,$result);
-    			return $output;
-    			/*foreach ($output as $dat) {
-    				return $dat;
-    			}*/
+    			foreach ($output as $dat) {
+    				$res = explode(" ", $dat);
+    				if($res[0]=='root'){
+    					$pid = $res[1];
+    				}
+    			}
     		}
     		else{
-
+    			exec("ps -aux | grep 'sudo java -jar SILOP2.jar'",$output,$result);
+    			foreach ($output as $dat) {
+    				$res = explode(" ", $dat);
+    				if($res[0]=='root'){
+    					$pid = $res[1];
+    				}
+    			}
     		}
+    		return $pid;
     	}
     	catch(Exception $e){
 
