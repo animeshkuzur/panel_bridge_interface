@@ -606,7 +606,7 @@ class ConfigureController extends Controller
     			$command = "sudo kill ".$pid;
     			exec($command,$output,$result);
     			$path = $path.env('SBUS_BRIDGE_PATH')."SILOP.jar";
-    			exec('/home/pi/gateway.sh',$output,$result);
+    			exec('/home/pi/gateway.sh > /dev/null 2>/dev/null &',$output,$result);
     			return redirect('/sbus');
     		}
     		else{
@@ -622,7 +622,7 @@ class ConfigureController extends Controller
     			$command = "sudo kill ".$pid;
     			exec($command,$output,$result);
     			$path = $path.env('ZMOTE_BRIDGE_PATH')."SILOP2.jar";
-    			exec('/home/pi/gateway2.sh',$output,$result);
+    			exec('/home/pi/gateway2.sh > /dev/null 2>/dev/null &',$output,$result);
     			return redirect('/zmote');
     		}
     		return "No such process found.";
