@@ -598,6 +598,7 @@ class ConfigureController extends Controller
     				}
     			}
     			exec('sudo kill '.$pid,$output,$result);
+    			return $result;
     			$path = $path.env('SBUS_BRIDGE_PATH')."SILOP.jar";
     			exec('/home/pi/gateway.sh',$output,$result);
     		}
@@ -611,6 +612,7 @@ class ConfigureController extends Controller
     				}
     			}
     			exec('sudo kill '.$pid,$output,$result);
+    			return $result;
     			$path = $path.env('ZMOTE_BRIDGE_PATH')."SILOP2.jar";
     			exec('/home/pi/gateway2.sh',$output,$result);
     		}
