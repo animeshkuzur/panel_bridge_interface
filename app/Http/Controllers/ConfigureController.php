@@ -606,7 +606,7 @@ class ConfigureController extends Controller
     			$command = "sudo kill ".$pid;
     			exec($command,$output,$result);
     			$path = $path.env('SBUS_BRIDGE_PATH')."SILOP.jar";
-    			exec('/home/pi/gateway.sh > /dev/null 2>/dev/null &',$output,$result);
+    			exec('sudo java -jar '.$path.' > /dev/null 2>/dev/null &',$output,$result);
     			return redirect('/sbus');
     		}
     		else{
