@@ -604,9 +604,9 @@ class ConfigureController extends Controller
     				break;
     			}
     			exec('sudo kill '.$pid,$output,$result);
-    			echo $result;
+    			return [$result,$pid];
     			$path = $path.env('SBUS_BRIDGE_PATH')."SILOP.jar";
-    			exec('/home/pi/gateway.sh',$output,$result);
+    			/*exec('/home/pi/gateway.sh',$output,$result);*/
     		}
     		else{
     			exec("ps -aux | grep 'sudo java -jar SILOP2.jar'",$output,$result);
@@ -621,7 +621,7 @@ class ConfigureController extends Controller
     			exec('sudo kill '.$pid,$output,$result);
     			echo $result;
     			$path = $path.env('ZMOTE_BRIDGE_PATH')."SILOP2.jar";
-    			exec('/home/pi/gateway2.sh',$output,$result);
+    			/*exec('/home/pi/gateway2.sh',$output,$result);*/
     		}
     		return $pid;
 
