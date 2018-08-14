@@ -604,11 +604,11 @@ class ConfigureController extends Controller
     				break;
     			}
     			$command = "sudo kill ".$pid;
-    			exec($command,$output,$result);
+    			exec($command,$output2,$result2);
     			$path = $path.env('SBUS_BRIDGE_PATH')."SILOP.jar";
     			exec('/home/pi/gateway.sh > /dev/null 2>/dev/null &',$output,$result);
     			//return redirect('/sbus');
-    			return [$pid,$output,$result];
+    			return [$pid,$output,$output2,$result2];
     		}
     		else{
     			exec("ps -aux | grep 'sudo java -jar SILOP2.jar'",$output,$result);
