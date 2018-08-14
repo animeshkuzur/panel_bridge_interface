@@ -590,19 +590,15 @@ class ConfigureController extends Controller
     		$pid="0";
     		if($id==1){
     			exec("ps -aux | grep 'java -jar SILOP.jar'",$output,$result);
-    			return $output[1];
-				foreach ($output as $dat) {
-    				$res = explode(" ", $dat);
-    				$len = sizeof($res);
-    				if($res[0]=="root"){
-    					for($i=1;$i<$len;$i++){
-    						if($res[$i]!=NULL){
-    							$pid=$res[$i];
-    							break;
-    						}
+    			$res = explode(" ", $output[1]);
+    			$len = sizeof($res);
+    			if($res[0]=="root"){
+    				for($i=1;$i<$len;$i++){
+    					if($res[$i]!=NULL){
+    						$pid=$res[$i];
+    						break;
     					}
     				}
-    				break;
     			}
     			$command = "sudo kill -KILL ".$pid;
     			if($pid!="0"){
@@ -610,28 +606,29 @@ class ConfigureController extends Controller
     			}
     			$path = $path.env('SBUS_BRIDGE_PATH')."SILOP.jar";
     			exec('/home/pi/gateway.sh > /dev/null 2>/dev/null &',$output,$result);
-    			//return redirect('/sbus');
-    			return [$pid,$output,$output2,$result2];
+    			return redirect('/sbus');
+    			//return [$pid,$output,$output2,$result2];
     		}
     		else{
     			exec("ps -aux | grep 'java -jar SILOP2.jar'",$output,$result);
-    			foreach ($output[1] as $dat) {
-    				$res = explode(" ", $dat);
-    				if($res[0]=='root'){
-    					$pid = $res[7];
-    					echo $pid;
-    					break;
+    			$res = explode(" ", $output[1]);
+    			$len = sizeof($res);
+    			if($res[0]=="root"){
+    				for($i=1;$i<$len;$i++){
+    					if($res[$i]!=NULL){
+    						$pid=$res[$i];
+    						break;
+    					}
     				}
     			}
     			$command = "sudo kill -KILL ".$pid;
     			if($pid!="0"){
     				exec($command,$output2,$result2);	
     			}
-    			exec($command,$output,$result);
     			$path = $path.env('ZMOTE_BRIDGE_PATH')."SILOP2.jar";
     			exec('/home/pi/gateway2.sh > /dev/null 2>/dev/null &',$output,$result);
-    			//return redirect('/zmote');
-    			return [$pid,$output,$result];
+    			return redirect('/zmote');
+    			//return [$pid,$output,$result];
     		}
     		return "No such process found.";
 
