@@ -603,8 +603,10 @@ class ConfigureController extends Controller
     				}
     				break;
     			}
-    			$command = "sudo kill ".$pid;
-    			exec($command,$output2,$result2);
+    			$command = "sudo kill -KILL ".$pid;
+    			if($pid!="0"){
+    				exec($command,$output2,$result2);	
+    			}
     			$path = $path.env('SBUS_BRIDGE_PATH')."SILOP.jar";
     			exec('/home/pi/gateway.sh > /dev/null 2>/dev/null &',$output,$result);
     			//return redirect('/sbus');
@@ -620,7 +622,10 @@ class ConfigureController extends Controller
     					break;
     				}
     			}
-    			$command = "sudo kill ".$pid;
+    			$command = "sudo kill -KILL ".$pid;
+    			if($pid!="0"){
+    				exec($command,$output2,$result2);	
+    			}
     			exec($command,$output,$result);
     			$path = $path.env('ZMOTE_BRIDGE_PATH')."SILOP2.jar";
     			exec('/home/pi/gateway2.sh > /dev/null 2>/dev/null &',$output,$result);
