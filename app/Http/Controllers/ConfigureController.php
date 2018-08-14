@@ -589,8 +589,8 @@ class ConfigureController extends Controller
     		$path = base_path().'/SILOP/';
     		$pid="0";
     		if($id==1){
-    			exec("ps -aux | grep 'sudo java -jar SILOP.jar'",$output,$result);
-				foreach ($output as $dat) {
+    			exec("ps -aux | grep 'java -jar SILOP.jar'",$output,$result);
+				foreach ($output[1] as $dat) {
     				$res = explode(" ", $dat);
     				$len = sizeof($res);
     				if($res[0]=="root"){
@@ -613,8 +613,8 @@ class ConfigureController extends Controller
     			return [$pid,$output,$output2,$result2];
     		}
     		else{
-    			exec("ps -aux | grep 'sudo java -jar SILOP2.jar'",$output,$result);
-    			foreach ($output as $dat) {
+    			exec("ps -aux | grep 'java -jar SILOP2.jar'",$output,$result);
+    			foreach ($output[1] as $dat) {
     				$res = explode(" ", $dat);
     				if($res[0]=='root'){
     					$pid = $res[7];
