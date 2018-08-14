@@ -590,7 +590,8 @@ class ConfigureController extends Controller
     		$pid="0";
     		if($id==1){
     			exec("ps -aux | grep 'java -jar SILOP.jar'",$output,$result);
-				foreach ($output[1] as $dat) {
+    			return $output[1];
+				foreach ($output as $dat) {
     				$res = explode(" ", $dat);
     				$len = sizeof($res);
     				if($res[0]=="root"){
