@@ -28,7 +28,7 @@
 	<div class="config-panel">
 		<div class="container">
 			<div class="title">
-				ZMote Bridge <a href="{{ url('/').'/reload/1' }}" class="btn btn-outline-secondary">Reload</a> <a href="http://silop.in" target="_blank"><img src="{{ URL::asset('/assets/logo.png') }}" height="60" width="144" class="float-right"></a>
+				ZMote Bridge <a href="{{ url('/').'/reload/2' }}" class="btn btn-outline-secondary">Reload</a> <a href="http://silop.in" target="_blank"><img src="{{ URL::asset('/assets/logo.png') }}" height="60" width="144" class="float-right"></a>
 			</div>
 			<hr>
 			<div class="errors">
